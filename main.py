@@ -73,7 +73,50 @@ class Shortest_Path_searching_domain:
                     self.parent[d]=v
                     heapq.heappush(Open,(self.path_cost[d],d))
         return -1
+#test part
 
+size=random.randint(4,10)#num of different city
+n=int(size*(size-1)/2.0)#num of combinations of different pair of cities.
+C=list(combinations(np.arange(size),2))
+cost=random.sample(range(100, 3000), n)
+
+start,end=random.sample(range(size), 2)#start and end city
+
+flights=list(set(random.choices(C,k=int(size))))
+f=len(flights)
+#G=[[0,1,0],[0,2,0],[2,3,0],[1,4,0]]
+G=[[0]*3 for i in range(2*f)]
+#not all pair of cities have direct flight,randomly choose k=size pair of cities,
+#assume that each picked pair of cities have flights to and from each other
+for i in range(f):
+    G[i][0],G[i][1]=flights[i]
+    G[f+i][0],G[f+i][1]=flights[i][1],flights[i][0]
+#print(G)
+
+distance=[[0]*size for i in range(size)]
+#initialize distance between any pair of cities
+for i,(s,e) in enumerate(C):
+    distance[e][s]=distance[s][e]=cost[i]
+#Initialize tikect price for any pair of cities that have direct flight
+for i in range(f):
+    s,e=G[i][0],G[i][1]
+    #If distance between two city is less than 500, then the tickect price is 100+a random num in range(0,50)
+    ran=random.uniform(0,50)
+    G[f+i][2]=G[i][2]=100+ran if distance[s][e]<500 else 100+(distance[s][e]-500)*0.3+ran
+
+domain=Cheapest_Path_searching_domain(size,G,distance)
+domain.sps_domain(start,end,1.1)
+print("G",G)
+print('Distance',distance)
+print('Cheapest path for start city {}, end city {} with price {}'.format(start,end, domain.goal))
+domain.print_path(end)
+
+
+
+
+
+
+"""
 size=5
 n=int(size*(size-1)/2.0)
 arr=np.arange(5)
@@ -99,7 +142,7 @@ domain.sps_domain(start,end,0.1)
 print(G)
 print(distance)
 domain.print_path(end)
-
+"""
 
 
 
