@@ -2,14 +2,6 @@
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-import numpy as np
-import random
-import tensorflow as tf
-import matplotlib.pyplot as plt
-from itertools import combinations
-import collections
-import heapq
-
 class Cheapest_Path_searching_domain:
     def __init__(self,size,G,distance):
         #distance is 2D array, distance[start][end]=Euclidean distance between two cities.
@@ -29,11 +21,12 @@ class Cheapest_Path_searching_domain:
 
     def optimal_heuristic(self,start,end):
         #optimal_heuristic by intuition is the cost calculated wrt the shortest distance between two city
-        return self.distance[start][end]
+        return 100 if self.distance[start][end]<500 else 100+0.3*(self.distance[start][end]-500)
+        #self.distance[start][end]
 
     def print_path(self, e):
         if self.parent[e]==None:
-            print(e)
+            print(e) if e==start else print('No path')
             return
         self.print_path(self.parent[e])
         print(self.parent[e],e)
@@ -41,7 +34,7 @@ class Cheapest_Path_searching_domain:
     def min_cost(self, P, end):
         risk=float('inf')
         for _,v in P:
-            risk=min(risk,self.path_cost[v]+100+0.3*(self.optimal_heuristic(v,end)-500))
+            risk=min(risk,self.path_cost[v]+self.optimal_heuristic(v,end))
         return risk
 
     def sps_domain(self, start, end, a):
@@ -62,7 +55,8 @@ class Cheapest_Path_searching_domain:
             if v==end and self.path_cost[v]<self.goal:
                 self.goal=self.path_cost[v]
                 self.parent[end]=self.parent[v]
-            if self.goal<self.min_cost(Open,end):
+            if self.goal<a*self.min_cost(Open,end):
+                print('Cheapest path found', self.goal, self.min_cost(Open,end))
                 return
             #check each child node of parent node v
             for d,cost in Graph[v]:
@@ -73,9 +67,11 @@ class Cheapest_Path_searching_domain:
                     self.parent[d]=v
                     heapq.heappush(Open,(self.path_cost[d],d))
         return -1
+
+
 #test part
 
-size=random.randint(4,10)#num of different city
+size=random.randint(4,20)#num of different city
 n=int(size*(size-1)/2.0)#num of combinations of different pair of cities.
 C=list(combinations(np.arange(size),2))
 cost=random.sample(range(100, 3000), n)
@@ -105,7 +101,7 @@ for i in range(f):
     G[f+i][2]=G[i][2]=100+ran if distance[s][e]<500 else 100+(distance[s][e]-500)*0.3+ran
 
 domain=Cheapest_Path_searching_domain(size,G,distance)
-domain.sps_domain(start,end,1.1)
+domain.sps_domain(start,end,1)
 print("G",G)
 print('Distance',distance)
 print('Cheapest path for start city {}, end city {} with price {}'.format(start,end, domain.goal))
