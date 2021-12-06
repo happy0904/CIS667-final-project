@@ -10,7 +10,7 @@ from itertools import combinations
 import collections
 import heapq
 
-class Shortest_Path_searching_domain:
+class Cheapest_Path_searching_domain:
     def __init__(self,size,G,distance):
         #distance is 2D array, distance[start][end]=Euclidean distance between two cities.
         #self.heuristic=heuristic
