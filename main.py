@@ -20,7 +20,8 @@ import matplotlib.pyplot as plt
 from tensorflow import keras
 from tensorflow.keras import layers
 from sklearn.preprocessing import MinMaxScaler
-
+#NN_plot plots the loss trendency
+from NN_Plot import NN_plot
 #neuron network for heuristic training
 class NN_heuristic:
     #x,y training set. xTest,yTest testing set. Coordinates of all the cities.
@@ -160,7 +161,7 @@ def E_distance(x1,y1,x2,y2):
 
 #test part
 
-size=10#random.randint(4,20)#num of different city
+size=15#random.randint(4,20)#num of different city
 n=int(size*(size-1)/2.0)#num of combinations of different pair of cities.
 C=list(combinations(np.arange(size),2))
 Coordinate=[3000*np.random.random_sample(size = 2) for i in range(size)]
@@ -210,9 +211,8 @@ yTest=Output[num_test]
 Test=NN_heuristic(xBatch,yBatch,Input,xTest,yTest,size)
 #T_heuristic=np.array([0 for i in range(size**2)])
 #T_heuristic=np.reshape(T_heuristic, (T_heuristic.shape[0], -1))
-
-#T_heuristic=Test.train()
-#print('T',T_heuristic)
+NN=NN_plot(xBatch,yBatch,Input,xTest,yTest,size)
+T_heuristic_plot=NN.train()
 domain=Cheapest_Path_searching_domain(size,G,distance,T_heuristic=Test.train)
 domain.sps_domain(start,end,1.0)
 print('flight',flights)
@@ -220,13 +220,6 @@ print("G",G)
 print('Cheapest path for start city {}, end city {} with price {}'.format(start,end, domain.goal))
 domain.print_path(end)
 domain.node_count()
-
-
-
-
-
-
-
 
 
 
