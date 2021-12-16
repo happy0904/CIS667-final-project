@@ -22,7 +22,7 @@ from dijkstra import Cheapest_Path_searching_dijkstra
 
 NN_plot.py is for plotting the loss trend
 sub_optimal is A* searching without NN
-main.py is include all the function need to run: Neuron network training, Cheapest ticket search, and data generation.
+final_test.py is include all the function need to run: Neuron network training, Cheapest ticket search, and data generation.
 When you start to run main.py, there will be prompt :'Enter you size value:' show up, once you enter a integer number, the program will run
 (I suggested start from smaller number first, say '5', then increase to '10' etc. It may be slow for larger number).
 Then there will be prompt ask for choose which algorthm you want to test, there are four optionS:Dijkstra,baseline_AI, NN_AI,Both.(Both means, all the algorthm will run at the same time, since my data are generated randomly, if you run each algorithm seperately, you may have different problems everytime, it's hard to compare, but you can run each of time seperately first (since both should take long time) then run 'Both'.
