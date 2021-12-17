@@ -24,7 +24,7 @@ NN_plot.py is for plotting the loss trend
 sub_optimal is A* searching without NN
 final_test.py is include all the function need to run: Neuron network training, Cheapest ticket search, and data generation.
 When you start to run main.py, there will be prompt :'Enter you size value:' show up, once you enter a integer number, the program will run
-(I suggest start from smaller number first, say 5, then increase to 10,20, etc. It may be slow for very larger number). After several seconds...
+(I suggest start from smaller number first, say 5, then increase to 10,20, etc. It may be slow for very larger number). After several seconds...(for size=30, it will take less than 1 min)
 
 Then there will be prompt ask for choose which algorithm you want to test, there are four options:Dijkstra,baseline_AI, NN_AI, Both.(Both means all the algorithm will run at the same time, since my data are generated randomly, if you run each algorithm seperately, you may have different problems everytime, it's hard to compare, but you can run each of them seperately first, then run 'Both'.
 Meaning of each parameter:
